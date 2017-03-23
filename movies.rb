@@ -1,6 +1,6 @@
 films = ARGV[0] || "movies.txt"
 
-if File.exist?(films) == false
+unless File.exist?(films)  
   abort "Такого файла не существует"
 end
 
