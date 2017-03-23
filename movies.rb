@@ -8,7 +8,9 @@ allfilms = File.readlines(films)
 allfilms.map!{|i| i.split("|")}
 
 allfilms.each do |film|
-  print film[1], ' ' 
-  film[7][-1].to_i.times { print '*' } 
-  puts
+  if film[1].include?("Max")
+    print film[1], " "
+    film[7][-1].to_i.times { print "*" } 
+    puts
+  end
 end
