@@ -42,3 +42,12 @@ allfilms.select{ |f| f[5].split(",").include?("Comedy")}.map do |film| {
   puts
   puts
 end
+
+allfilms.map do |film| {director: film[8] 
+                        }
+              end.uniq.sort_by { |hsh| hsh[:director].split(" ").last }.each_with_index do |viewfilm, c|
+
+  print "#{c + 1}. #{viewfilm[:director].split(" ").last} " 
+  puts
+  puts
+end
