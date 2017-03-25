@@ -10,7 +10,6 @@ end
 allfilms = File.readlines(films)  
 allfilms.map!{|i| i.split("|")}
 puts
-puts
 puts "5 самых длинных фильмов:"
 puts
 
@@ -34,7 +33,7 @@ puts
 puts
 puts "10 комедий (первые по дате выхода):"
 puts
-allfilms.select{ |f| f[5].split(",").include?("Comedy")}.map do |film| {
+allfilms.select{ |f| f[5].scan(/Comedy/).include?('Comedy')}.map do |film| {
                         link: film[0], 
                         name: film[1],
                         date: film[2],
