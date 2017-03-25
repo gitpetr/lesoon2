@@ -7,7 +7,7 @@ end
 allfilms = File.readlines(films)  
 allfilms.map!{|i| i.split("|")}
  
-allfilms.map! do |film| {
+allfilms.map do |film| {
                         link: film[0], 
                         name: film[1], 
                         year: film[4], 
@@ -18,10 +18,10 @@ allfilms.map! do |film| {
                         director: film[8], 
                         actors: film[9]
                         }
-              end
-
-allfilms.sort_by { |hsh| hsh[:duratation] }.reverse[0...5].each_with_index do |viewfilm, c|
+              end.sort_by { |hsh| hsh[:duratation] }.reverse[0...5].each_with_index do |viewfilm, c|
   print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]}, #{viewfilm[:actors].chomp}, #{viewfilm[:country]} - #{viewfilm[:duratation]} min). - Link: #{viewfilm[:link]}" 
   puts
   puts
 end
+
+# allfilms.select{ |film| film.include&('Comedy')}
