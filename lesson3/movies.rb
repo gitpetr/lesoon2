@@ -1,4 +1,7 @@
 films = ARGV[0] || "../movies.txt"
+def printfilms( view, count )
+   print "#{count + 1}. #{view[:name]}: #{view[:director]} (#{view[:year]},  #{view[:genre].split(',').join('/')} - #{view[:duratation]})." 
+end
 
 unless File.exist?(films)  
   abort "Такого файла не существует"
@@ -21,7 +24,8 @@ allfilms.map do |film| {
                         actors: film[9]
                         }
               end.sort_by { |hsh| hsh[:duratation].split(" ")[0].to_i }.reverse[0...5].each_with_index do |viewfilm, c|              
-  print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]},  #{viewfilm[:genre].split(',').join('/')} - #{viewfilm[:duratation]})." 
+  #print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]},  #{viewfilm[:genre].split(',').join('/')} - #{viewfilm[:duratation]})." 
+  printfilms( viewfilm, c )
   puts
   puts
 end
@@ -40,7 +44,8 @@ allfilms.select{ |f| f[5].split(",").include?("Comedy")}.map do |film| {
                         actors: film[9]
                         }
               end.sort_by { |hsh| hsh[:date] }[0...10].each_with_index do |viewfilm, c|
-  print print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]},  #{viewfilm[:genre].split(',').join('/')} - #{viewfilm[:duratation]})." 
+  #print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]},  #{viewfilm[:genre].split(',').join('/')} - #{viewfilm[:duratation]})." 
+  printfilms( viewfilm, c )
   puts
   puts
 end
@@ -60,3 +65,4 @@ end
 puts
 print "количество фильмов, снятых не в США: "
 puts allfilms.select{ |f| !f[3].include?("USA")}.count 
+
