@@ -9,8 +9,11 @@ end
 
 allfilms = File.readlines(films)  
 allfilms.map!{|i| i.split("|")}
-
+puts
+puts
 puts "5 самых длинных фильмов:"
+puts
+
 allfilms.map do |film| {
                         link: film[0], 
                         name: film[1],
@@ -24,13 +27,13 @@ allfilms.map do |film| {
                         actors: film[9]
                         }
               end.sort_by { |hsh| hsh[:duratation].split(" ")[0].to_i }.reverse[0...5].each_with_index do |viewfilm, c|              
-  #print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]},  #{viewfilm[:genre].split(',').join('/')} - #{viewfilm[:duratation]})." 
   printfilms( viewfilm, c )
   puts
-  puts
 end
+puts
+puts
 puts "10 комедий (первые по дате выхода):"
-
+puts
 allfilms.select{ |f| f[5].split(",").include?("Comedy")}.map do |film| {
                         link: film[0], 
                         name: film[1],
@@ -44,25 +47,27 @@ allfilms.select{ |f| f[5].split(",").include?("Comedy")}.map do |film| {
                         actors: film[9]
                         }
               end.sort_by { |hsh| hsh[:date] }[0...10].each_with_index do |viewfilm, c|
-  #print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]},  #{viewfilm[:genre].split(',').join('/')} - #{viewfilm[:duratation]})." 
   printfilms( viewfilm, c )
   puts
-  puts
 end
-
+puts 
+puts 
 puts "список всех режиссёров по алфавиту:"
+puts
 
-allfilms.map do |film| {director: film[8] 
-                        }
+allfilms.map do |film| { director: film[8] }
               end.uniq.sort_by { |hsh| hsh[:director].split(" ").last }.each_with_index do |viewfilm, c|
 
-  print "#{c + 1}. #{viewfilm[:director].split(" ").last} ", " " 
+  print "#{c + 1}. #{viewfilm[:director].split(" ").last} ", "#{' ' * (14 - (c.to_s.length + viewfilm[:director].split(" ").last.length))}" 
   if (c + 1) % 10 == 0 
     puts 
   end
   
 end
 puts
+puts 
 print "количество фильмов, снятых не в США: "
 puts allfilms.select{ |f| !f[3].include?("USA")}.count 
+puts 
+puts
 
