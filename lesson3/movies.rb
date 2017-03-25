@@ -21,7 +21,7 @@ allfilms.map! do |film| {
               end
 
 allfilms.sort_by { |hsh| hsh[:duratation] }.reverse[0...5].each_with_index do |viewfilm, c|
-  print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]}, #{viewfilm[:actors][-1]=="\n"? viewfilm[:actors][0...-1]+"\\n" : viewfilm[:actors]}, #{viewfilm[:country]} - #{viewfilm[:duratation]} min). - Link: #{viewfilm[:link]}" 
+  print "#{c + 1}. #{viewfilm[:name]}: #{viewfilm[:director]} (#{viewfilm[:year]}, #{viewfilm[:actors].chomp}, #{viewfilm[:country]} - #{viewfilm[:duratation]} min). - Link: #{viewfilm[:link]}" 
   puts
   puts
 end
