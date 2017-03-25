@@ -66,7 +66,7 @@ end
 puts
 puts 
 print "количество фильмов, снятых не в США: "
-puts allfilms.select{ |f| !f[3].include?("USA")}.count 
+puts allfilms.select{ |f| !f[3].scan(/USA/).include?("USA")}.count 
 puts 
 puts
 
