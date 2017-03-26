@@ -1,72 +1,35 @@
+TITRES = [:link, :name, :date, :country, :year, :genre, :duratation, :rating, :director, :actors]
+
 films = ARGV[0] || "../movies.txt"
 def printfilms( view, count )
-   print "#{count + 1}. #{view[:name]}: #{view[:director]} (#{view[:year]},  #{view[:genre].split(',').join('/')} - #{view[:duratation]})." 
+   puts(" #{count + 1}. #{view[:name]}: #{view[:director]} (#{view[:year]}, \
+    #{view[:genre].split(',').join('/')} - #{view[:duratation]}).")
 end
 
 unless File.exist?(films)  
-  abort "Такого файла не существует"
+  abort " Такого файла не существует"
 end
 
-allfilms = File.readlines(films)  
-allfilms.map!{|i| i.split("|")}
-puts
-puts "5 самых длинных фильмов:"
-puts
+allfilms = File.readlines(films) 
+allfilms.map!{|i| i.chomp.split("|")}
+puts; puts "  5 самых длинных фильмов:"; puts
 
-allfilms.map do |film| {
-                        link: film[0], 
-                        name: film[1],
-                        date: film[2],
-                        country: film[3],
-                        year: film[4], 
-                        genre: film[5], 
-                        duratation:  film[6], 
-                        rating: film[7], 
-                        director: film[8], 
-                        actors: film[9]
-                        }
-              end.sort_by { |hsh| hsh[:duratation].split(" ")[0].to_i }.reverse[0...5].each_with_index do |viewfilm, c|              
-  printfilms( viewfilm, c )
-  puts
-end
-puts
-puts
-puts "10 комедий (первые по дате выхода):"
-puts
-allfilms.select{ |f| f[5].scan(/Comedy/).include?('Comedy')}.map do |film| {
-                        link: film[0], 
-                        name: film[1],
-                        date: film[2],
-                        country: film[3],
-                        year: film[4], 
-                        genre: film[5], 
-                        duratation:  film[6], 
-                        rating: film[7], 
-                        director: film[8], 
-                        actors: film[9]
-                        }
-              end.sort_by { |hsh| hsh[:date] }[0...10].each_with_index do |viewfilm, c|
-  printfilms( viewfilm, c )
-  puts
-end
-puts 
-puts 
-puts "список всех режиссёров по алфавиту:"
-puts
+allfilms.map { |film| Hash[TITRES.zip(film)] }.sort_by { 
+  |hsh| hsh[:duratation].split(" ")[0].to_i }.reverse[0...5].each_with_index { 
+  |viewfilm, c| printfilms( viewfilm, c )}
 
-allfilms.map do |film| { director: film[8] }
-              end.uniq.sort_by { |hsh| hsh[:director].split(" ").last }.each_with_index do |viewfilm, c|
+puts; puts; puts "  10 комедий (первые по дате выхода):"; puts
 
-  print "#{c + 1}. #{viewfilm[:director].split(" ").last} ", "#{' ' * (14 - (c.to_s.length + viewfilm[:director].split(" ").last.length))}" 
-  if (c + 1) % 10 == 0 
-    puts 
-  end
-  
-end
-puts
-puts 
-print "количество фильмов, снятых не в США: "
-puts allfilms.select{ |f| !f[3].scan(/USA/).include?("USA")}.count 
-puts 
-puts
+allfilms.select{ |f| f[5].scan(/Comedy/).include?('Comedy')
+                }.map { |film| Hash[TITRES.zip(film)] 
+                }.sort_by { |hsh| hsh[:date] }[0...10].each_with_index {
+                |viewfilm, c| printfilms( viewfilm, c )}
 
+puts;  puts;  puts "  список всех режиссёров по алфавиту:"; puts
+
+allfilms.map { |film| { director: film[8] }}.uniq.sort_by {|hsh| hsh[:director].split(" ").last 
+              }.each_slice(10){|viewfilm| puts; viewfilm.each {
+              |viewfilm| print " #{viewfilm[:director].split(" ").last} #{" " * (12 - (viewfilm[:director].split(" ").last.length))}"
+              } } 
+puts; puts; print " количество фильмов, снятых не в США: "
+puts allfilms.select{ |f| !f[3].scan(/USA/).include?("USA")}.count; puts 
