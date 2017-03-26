@@ -34,7 +34,7 @@ puts "\t список всех режиссёров по алфавиту:"; put
 
 allfilms.map { |film| { director: film[8] }}.uniq.sort_by {|hsh| hsh[:director].split(" ").last 
               }.each_slice(6){|viewfilm| puts; viewfilm.each {
-              |viewfilm| print "\t#{viewfilm[:director].split(" ").last} #{" " * (12 - (viewfilm[:director].split(" ").last.length))}"
+              |viewfilm| print "\t#{viewfilm[:director].split(" ").last}".ljust(15)
               } } 
 puts
 puts
