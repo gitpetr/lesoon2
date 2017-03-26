@@ -23,9 +23,10 @@ allfilms.sort_by {
 
 puts
 puts
-puts "\t 10 комедий (первые по дате выхода):"; puts
+puts "\t 10 комедий (первые по дате выхода):"
+puts
  
-allfilms.select{ |v| v.to_s.include?('Comedy')  }.sort_by {
+allfilms.select{ |v| v[:genre].include?('Comedy')  }.sort_by {
                  |hsh| hsh[:date] }.first(10).each_with_index {
                  |viewfilm, c| printfilms( viewfilm, c )}     
 puts
@@ -40,5 +41,5 @@ director.each_slice(6){|viewfilm|
 puts 
 puts
 print " количество фильмов, снятых не в США: "
-puts allfilms.select{ |f| !f.to_s.include?("USA")}.count
+puts allfilms.select{ |f| !f[:country].include?("USA")}.count
 puts 
