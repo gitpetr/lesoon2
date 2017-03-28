@@ -16,11 +16,21 @@ unless File.exist?(films)
   abort " Такого файла не существует"
 end
 
-allfilms = CSV.read(films, col_sep: '|').map! { |ln| TITRES.zip(ln).to_h}
-allfilms.map! {|film| OpenStruct.new(film)}
+allfilms = CSV.read(films, col_sep: '|').map { |ln| TITRES.zip(ln).to_h}.map {|film| OpenStruct.new(film)}
 
 director = allfilms.map { |film| film[:director].split(" ").last }.uniq.sort
-manth = allfilms.map { |f| [f[:year][5..6]]}
+
+manth = allfilms.sort_by{|f| f[:year][5..6].to_i
+                        }.map { |f| 
+                          if f[:year].length >=7
+                            if f[:year].length == 7
+                              f[:year]+='-22' 
+                            else 
+                              f[:year]
+                            end
+                            Date.parse(f[:year]).strftime("%B")
+                          end
+                           }.compact
 
  
 puts
@@ -56,7 +66,4 @@ puts
 
 puts "\t Статистика по месяцам: "
 puts
-
-statistics = MANTH.zip([manth.count(['01']), manth.count(['02']), manth.count(['03']), manth.count(['04']), manth.count(['05']), manth.count(['06']), manth.count(['07']),\
- manth.count(['08']), manth.count(['09']),  manth.count(['10']), manth.count(['11']), manth.count(['12']) ]).to_h
-statistics.each{ |k, v| print "\t #{k}:".ljust(15); puts "#{v} фильмов"}
+manth.uniq.each { |man| puts "\t#{ man.ljust(15) } #{ manth.count(man) }"}
