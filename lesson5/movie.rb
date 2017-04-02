@@ -15,11 +15,16 @@ class Movie
   end
 
   def has_genre? genre 
+  raise  "Извините! Вы ошиблись, такого жанра нет" if !GENRE.include?(genre)
+   
     yes = @genre.include?(genre)
-    puts "\tYes" if yes
-  raise  "\tNo" if !yes
-  rescue Exception => e 
-   puts e.message
-  end
+    if yes
+      puts "\tYes" 
+    else
+      puts "\tNo"
+    end
 
+  rescue Exception => e 
+    puts "\t#{e.message}"
+  end
 end
