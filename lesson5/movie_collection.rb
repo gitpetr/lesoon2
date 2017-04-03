@@ -41,4 +41,8 @@ class MovieCollection
     all.map{ |f| f.genre.split(',').each{ |g| g }  }.flatten.uniq.sort
   end
 
+  def to_s view, c
+    puts "#{ c + 1 } #{view.name}: #{view.director} ( #{view.year}, #{view.genre.split(',').join('/')} - #{view.duratation})."
+  end
+
 end

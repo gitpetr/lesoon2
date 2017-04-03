@@ -10,24 +10,24 @@ MANTH = %i[Январь Февраль Март Апрель Май Июнь И�
 listfilms =  MovieCollection.new(@films)
 GENRE = listfilms.genres
 puts "\t список всех фильмов(listfilms.all)"
-listfilms.all.each_with_index {|view, c | puts "#{ c + 1 } #{view.name}: #{view.director} ( #{view.year}, #{view.genre.split(',').join('/')} - #{view.duratation})."   }
+listfilms.all.each_with_index {|view, c | listfilms.to_s(view, c)   }
 puts
 puts "\t - Список фильмов.(listfilms.sortby(:name)) Показаны названия первых пяти "
 @sortfilm = listfilms.sortby(:year) 
-@sortfilm.each_with_index {|view, c | puts "#{ c + 1 } #{view.name}: #{view.director} ( #{view.year}, #{view.genre.split(',').join('/')} - #{view.duratation})." }
+@sortfilm.each_with_index {|view, c | listfilms.to_s(view, c) }
 puts
 puts "\t - Список фильмов отсортированных по жанру 'Comedy'"
 @filtrfilm = listfilms.filter(:genre, 'Comedy')
-@filtrfilm.each_with_index {|view, c | puts "#{ c + 1 } #{view.name}: #{view.director} ( #{view.year}, #{view.genre.split(',').join('/')} - #{view.duratation})." }
+@filtrfilm.each_with_index {|view, c | listfilms.to_s(view, c) }
 puts
 puts  
 puts "\t - Список фильмов отсортированных по жанру 'Drama' (listfilms.filter(:genre, 'Drama').first(5)) "
 @filtrfilm1 = listfilms.filter(:genre, 'Drama')
-@filtrfilm1.each_with_index {|view, c | puts "#{ c + 1 } #{view.name}: #{view.director} ( #{view.year}, #{view.genre.split(',').join('/')} - #{view.duratation})." }
+@filtrfilm1.each_with_index {|view, c | listfilms.to_s(view, c) }
 puts
 puts "\t - Список отсортированный по жанру 'Romance' "
 @filtrfilm2 = listfilms.filter(:genre, 'Romance')
-@filtrfilm2.each_with_index {|view, c | puts "#{ c + 1 } #{view.name}: #{view.director} ( #{view.year}, #{view.genre.split(',').join('/')} - #{view.duratation})." }
+@filtrfilm2.each_with_index {|view, c | listfilms.to_s(view, c)   }
 puts
 puts "\t - Актеры, снявшиеся более, чем в 5 фильмах(listfilms.stats(:actors)"
 listfilms.stats(:actors)
