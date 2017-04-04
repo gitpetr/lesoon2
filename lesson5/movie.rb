@@ -1,7 +1,7 @@
 class Movie
   attr_reader *TITRES 
  
-  def initialize film
+  def initialize(owner, film)
     @link = film[:link]
     @name = film[:name]
     @year = film[:year]
@@ -12,10 +12,11 @@ class Movie
     @rating = film[:rating]
     @director = film[:director].split(' ').reverse.join(' ') 
     @actors = film[:actors].split(',')
+    @collection = owner 
   end
 
   def has_genre? genre 
-     raise  "Извините! Вы ошиблись, такого жанра нет" if !GENRIES.include?(genre)
+     raise  "Извините! Вы ошиблись, такого жанра нет" if !@collection.genres.include?(genre)
      @genre.include?(genre)
   end
 end

@@ -1,13 +1,12 @@
 class MovieCollection 
   
-  attr_reader :allfilms, :genries
+  attr_reader :allfilms
   
   def initialize filmfile
     unless File.exist?(filmfile)  
       abort " Такого файла не существует"
     end
-    @allfilms = CSV.read(filmfile, col_sep: '|', headers: TITRES ).map{ |f| Movie.new(f.to_h) }
-    @genries = genres
+    @allfilms = CSV.read(filmfile, col_sep: '|', headers: TITRES ).map{ |f| Movie.new(self, f.to_h) }
   end
 
   def all
@@ -54,5 +53,4 @@ class MovieCollection
   def to_s view, c
     puts "#{ c + 1 } #{view.name}: #{view.director} ( #{view.year}, #{view.genre.join('/')} - #{view.duratation})."
   end
-
 end

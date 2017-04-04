@@ -8,7 +8,6 @@ MANTH = %i[Январь Февраль Март Апрель Май Июнь И�
 
 @films = ARGV[0] || "./movies.txt"
 listfilms =  MovieCollection.new(@films)
-GENRIES = listfilms.genries
 
 puts "\t список всех фильмов(listfilms.all)"
 listfilms.all.first(5).each_with_index {|view, c | listfilms.to_s(view, c)   }
@@ -55,7 +54,7 @@ rescue Exception => e
   puts "\t#{e.message}"
 end
 puts "\t Список жанров"
-puts listfilms.genries
+puts listfilms.genres
 puts
 puts "Фильтр 'listfilms.filtr(year: 1942..1949, :genre => 'Film-Noir').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }'"
 listfilms.filtr(year: 1942..1949, genre: 'Film-Noir').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }
