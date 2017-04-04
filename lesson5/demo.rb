@@ -8,52 +8,54 @@ MANTH = %i[Январь Февраль Март Апрель Май Июнь И�
 
 @films = ARGV[0] || "./movies.txt"
 listfilms =  MovieCollection.new(@films)
-GENRE = listfilms.genres
+GENRIES = listfilms.genries
+
 puts "\t список всех фильмов(listfilms.all)"
-listfilms.all.each_with_index {|view, c | listfilms.to_s(view, c)   }
+listfilms.all.first(5).each_with_index {|view, c | listfilms.to_s(view, c)   }
 puts
 puts "\t - Список фильмов.(listfilms.sortby(:name)) Показаны названия первых пяти "
-@sortfilm = listfilms.sortby(:year) 
-@sortfilm.each_with_index {|view, c | listfilms.to_s(view, c) }
+listfilms.sortby(:year).first(5).each_with_index {|view, c | listfilms.to_s(view, c) } 
 puts
 puts "\t - Список фильмов отсортированных по жанру 'Comedy'"
-@filtrfilm = listfilms.filter(:genre, 'Comedy')
-@filtrfilm.each_with_index {|view, c | listfilms.to_s(view, c) }
+listfilms.filter(:genre, 'Comedy').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }
 puts
 puts  
 puts "\t - Список фильмов отсортированных по жанру 'Drama' (listfilms.filter(:genre, 'Drama').first(5)) "
-@filtrfilm1 = listfilms.filter(:genre, 'Drama')
-@filtrfilm1.each_with_index {|view, c | listfilms.to_s(view, c) }
+listfilms.filter(:genre, 'Drama').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }
 puts
 puts "\t - Список отсортированный по жанру 'Romance' "
-@filtrfilm2 = listfilms.filter(:genre, 'Romance')
-@filtrfilm2.each_with_index {|view, c | listfilms.to_s(view, c)   }
+listfilms.filter(:genre, 'Romance').first(5).each_with_index {|view, c | listfilms.to_s(view, c)   }
 puts
-puts "\t - Актеры, снявшиеся более, чем в 5 фильмах(listfilms.stats(:actors)"
-listfilms.stats(:actors)
-puts  
 puts "\t - Статистика по дате"
-listfilms.stats(:date)
+listfilms.stats(:date).each{|k, v| listfilms.print_stats(k, v.count) }
 puts
 puts "\t - Список актеров ( [6] )"
-
 print "\t ", listfilms.actors[6]  
 puts
 puts
-puts "\t - Cписок  режиссёров по алфавиту снявших более 5 фильмов:"
-listfilms.stats(:director)
+puts "\t - Cписок  режиссёров:"
+listfilms.stats(:director).first(5).each{|k, v| listfilms.print_stats(k, v) }
 puts
-puts "\t - Cписок   по  годам, снято более 5 фильмов:"
-listfilms.stats(:year)
+puts "\t - Cписок   по  годам"
+listfilms.stats(:year).first(5).each{|k, v|  listfilms.print_stats(k, v)  }
 puts
+begin
 puts("\t - Жанр фильма?")  
 puts "\t listfilms.all.first.has_genre? 'Comedy' "
-listfilms.all.first.has_genre? 'Comedy'
+puts (listfilms.all.first.has_genre? 'Comedy')?  ("Yes") :  ("No")
 puts "\t listfilms.all[154].has_genre? 'Comedy'"
-listfilms.all[154].has_genre? 'Comedy'
+puts (listfilms.all[154].has_genre? 'Comedy')?  "Yes" : "No"
 puts "\t listfilms.all.first.has_genre? 'Drama'"
-listfilms.all.first.has_genre? 'Drama'
+puts (listfilms.all.first.has_genre? 'Drama')?  "Yes" : "No"
 puts "\t listfilms.all[3].has_genre? 'Drama'"
-listfilms.all[3].has_genre? 'Drama'
+puts (listfilms.all[3].has_genre? 'Drama')?  "Yes" : "No"
 puts "\t Если ошиблись с жанром listfilms.all[3].has_genre? 'Boevik'"
-listfilms.all[3].has_genre? 'Boevik'
+puts (listfilms.all[3].has_genre? 'Boevik')?  "Yes" : "No"
+rescue Exception => e 
+  puts "\t#{e.message}"
+end
+puts "\t Список жанров"
+puts listfilms.genries
+puts
+puts "Фильтр 'listfilms.filtr(year: 1942..1949, :genre => 'Film-Noir').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }'"
+listfilms.filtr(year: 1942..1949, genre: 'Film-Noir').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }
