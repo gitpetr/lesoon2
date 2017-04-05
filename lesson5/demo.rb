@@ -9,35 +9,26 @@ MANTH = %i[Январь Февраль Март Апрель Май Июнь И�
 @films = ARGV[0] || "./movies.txt"
 listfilms =  MovieCollection.new(@films)
 
-puts "\t список всех фильмов(listfilms.all)"
-listfilms.all.first(5).each_with_index {|view, c | listfilms.to_s(view, c)   }
+puts "\t - Список всех фильмов(listfilms.all)"
+listfilms.all.first(5).each{|f| f.to_s }
 puts
-puts "\t - Список фильмов.(listfilms.sortby(:name)) Показаны названия первых пяти "
-listfilms.sortby(:year).first(5).each_with_index {|view, c | listfilms.to_s(view, c) } 
-puts
-puts "\t - Список фильмов отсортированных по жанру 'Comedy'"
-listfilms.filter(:genre, 'Comedy').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }
-puts
-puts  
-puts "\t - Список фильмов отсортированных по жанру 'Drama' (listfilms.filter(:genre, 'Drama').first(5)) "
-listfilms.filter(:genre, 'Drama').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }
-puts
-puts "\t - Список отсортированный по жанру 'Romance' "
-listfilms.filter(:genre, 'Romance').first(5).each_with_index {|view, c | listfilms.to_s(view, c)   }
-puts
-puts "\t - Статистика по дате"
-listfilms.stats(:date).each{|k, v| listfilms.print_stats(k, v.count) }
+puts "\t - Список фильмов.(listfilms.sortby(:year)) Показаны названия первых пяти "
+listfilms.sortby(:year).first(5).each{|f| f.to_s } 
 puts
 puts "\t - Список актеров ( [6] )"
 print "\t ", listfilms.actors[6]  
 puts
 puts
-puts "\t - Cписок  режиссёров:"
-listfilms.stats(:director).first(5).each{|k, v| listfilms.print_stats(k, v) }
+puts "\t - Cтатистика режиссёров:"
+listfilms.stats(:director).sort.first(5).each{|k, v| listfilms.print_stats(k, v) }
+puts "\t - Cтатистика актеров:"
+listfilms.stats(:actors).sort.first(5).each{|k, v| listfilms.print_stats(k, v) }
 puts
-puts "\t - Cписок   по  годам"
-listfilms.stats(:year).first(5).each{|k, v|  listfilms.print_stats(k, v)  }
+puts "\t - Cтатистика по годам"
+listfilms.stats(:year).first(5).sort.each{|k, v|  listfilms.print_stats(k, v)  }
 puts
+puts "\t - Статистика по месяцам"
+listfilms.stats(:month).each{|k, v| print(k, " - ", v, "\n" ) }
 begin
 puts("\t - Жанр фильма?")  
 puts "\t listfilms.all.first.has_genre? 'Comedy' "
@@ -54,7 +45,10 @@ rescue Exception => e
   puts "\t#{e.message}"
 end
 puts "\t Список жанров"
-puts listfilms.genres
+puts listfilms.genries
 puts
-puts "Фильтр 'listfilms.filtr(year: 1942..1949, :genre => 'Film-Noir').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }'"
-listfilms.filtr(year: 1942..1949, genre: 'Film-Noir').first(5).each_with_index {|view, c | listfilms.to_s(view, c) }
+puts " - Фильтр listfilms.filtr(year: 1942..1949, genre: 'Film-Noir').first(5).each{|f| f.to_s }"
+listfilms.filtr(year: 1942..1949, genre: 'Film-Noir').first(5).each{|f| f.to_s }
+puts  
+puts " - Фильтр listfilms.filtr(year: 1942..2016, actors: 'Uma Thurman').first(5).each{|f| f.to_s }"
+listfilms.filtr(year: 1942..2016, actors: 'Uma Thurman').first(5).each{|f| f.to_s }
