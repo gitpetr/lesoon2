@@ -13,7 +13,6 @@ class Movie
     @director = film[:director].split(' ').reverse.join(' ') 
     @actors = film[:actors].split(',')
     @collection = owner 
-    @manthf = []
   end
 
   def has_genre? genre 
@@ -26,6 +25,12 @@ class Movie
   end
   
   def month
-    @manthf <<  Date.parse(self.date).strftime("%B") if self.date.length == 10
+    # Date.parse(self.date).strftime("%B") if self.date.length == 10
+    self.date[5..6] if self.date.length == 10
+  end
+  def match_filter?(**option)
+      s = ""
+      option.each{|k, v| s += ( " && " + ( v ===  ((self.send(k).class==Array) ? self.send(k).join(',')  : self.send(k)) ).to_s)}
+      return s
   end
 end

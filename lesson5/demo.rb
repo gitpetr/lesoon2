@@ -25,10 +25,10 @@ puts "\t - Cтатистика актеров:"
 listfilms.stats(:actors).sort.first(5).each{|k, v| listfilms.print_stats(k, v) }
 puts
 puts "\t - Cтатистика по годам"
-listfilms.stats(:year).first(5).sort.each{|k, v|  listfilms.print_stats(k, v)  }
+listfilms.stats(:year).first(5).each{|k, v|  listfilms.print_stats(k, v)  }
 puts
 puts "\t - Статистика по месяцам"
-listfilms.stats(:month).each{|k, v| print(k, " - ", v, "\n" ) }
+listfilms.stats(:month).each{|k, v| listfilms.print_stats(MANTH[k.to_i-1].to_s, v) }
 begin
 puts("\t - Жанр фильма?")  
 puts "\t listfilms.all.first.has_genre? 'Comedy' "
@@ -52,3 +52,6 @@ listfilms.filtr(year: 1942..1949, genre: 'Film-Noir').first(5).each{|f| f.to_s }
 puts  
 puts " - Фильтр listfilms.filtr(year: 1942..2016, actors: 'Uma Thurman').first(5).each{|f| f.to_s }"
 listfilms.filtr(year: 1942..2016, actors: 'Uma Thurman').first(5).each{|f| f.to_s }
+puts 'фильтер'
+listfilms.filter( year: /2010/, genre: /Sci-Fi|Comedy/,  name: /Inception/ ).first(5).each{|f| f.to_s }
+ 

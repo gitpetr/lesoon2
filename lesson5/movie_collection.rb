@@ -23,14 +23,14 @@ class MovieCollection
   end
 
   def filtr(**options)
-   year, genre =  options.keys
-   years_list = options[year]
-   genres_list = options[genre]
-   @allfilms.select{ |f| years_list.member?(f.send(year).to_i)}.select{|f| f.send(genre).include?(genres_list)} 
+    year, genre =  options.keys
+    years_list = options[year]
+    genres_list = options[genre]
+    @allfilms.select{ |f| years_list === f.send(year).to_i }.select{ |f|  /(#{genres_list})/ === (f.send(genre)).join(',') } 
   end
 
   def stats(field)
-    @allfilms.map {|f| f.send(field) }.flatten.compact.inject(Hash.new(0)){|h, e| h[e]+=1; h }  
+    @allfilms.flat_map(&field).compact.sort.inject(Hash.new(0)){|h, e| h[e]+=1; h }  
   end
 
   def print_stats k, v
@@ -39,5 +39,9 @@ class MovieCollection
 
   def genres
     @genries = all.flat_map(&:genre).uniq.sort
+  end
+
+  def filter(option) 
+    @allfilms.select{ |f|  eval("true " +  f.match_filter?(option))} 
   end
 end
