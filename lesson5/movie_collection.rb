@@ -19,15 +19,15 @@ class MovieCollection
   end
 
   def actors
-    @allfilms.map {|f|  f.actors }
+    @allfilms.map { |f|  f.actors }
   end
 
   def stats(field)
-    @allfilms.flat_map(&field).compact.sort.inject(Hash.new(0)){|h, e| h[e]+=1; h }  
+    @allfilms.flat_map(&field).compact.sort.inject(Hash.new(0)){ |h, e| h[e]+=1; h }  
   end
 
   def print_stats k, v
-    puts "\t#{k.ljust(15)} #{v}"
+    puts "\t#{k.to_s.ljust(15)} #{v}"
   end
 
   def genres
@@ -35,7 +35,7 @@ class MovieCollection
   end
 
   def filter(option) 
-    @allfilms.select{ |f| eval("true " +  f.match_filter?(option))} 
+    @allfilms.select{ |f| f.match_filter?(option) } 
   end
   
 end

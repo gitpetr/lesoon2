@@ -4,7 +4,7 @@ class Movie
   def initialize(owner, film)
     @link = film[:link]
     @name = film[:name]
-    @year = film[:year]
+    @year = film[:year].to_i
     @country = film[:country].split(',')
     @date = film[:date]
     @genre = film[:genre].split(',')
@@ -21,7 +21,7 @@ class Movie
   end
 
   def to_s 
-   print "\t #{@name}: #{@director} ( #{@year}, #{@genre.join('/')} - #{@duratation}). \n\b"
+   print "\t #{ @name }: #{ @director } ( #{ @year }, #{ @genre.join('/') } - #{ @duratation }). \n\b"
   end
   
   def month
@@ -29,8 +29,6 @@ class Movie
   end
 
   def match_filter?(**option)
-      s = ""
-      option.each{|k, v| s +=  " && " +  ((v.class==Range)? v === self.send(k).to_i : ((self.send(k).class==Array) ? v === self.send(k).join(',') : v === self.send(k))).to_s}
-      s
+    option.each{|k, v| true && (self.send(k).class==Array) ? v === self.send(k).join(',') : v === self.send(k)}
   end
 end

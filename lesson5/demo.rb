@@ -51,5 +51,5 @@ puts "\t - Список жанров"
 puts listfilms.genries
 puts
 puts "\t - Фильтр: listfilms.filter( year: (1945..2010), genre: /Sci-Fi|Comedy/, director: /Zemeckis Robert|Cameron James/ )"
-listfilms.filter( year: (1945..2010), genre: /Sci-Fi|Comedy/, director: /Zemeckis Robert|Cameron James/ ).first(5).each{|f| f.to_s }
+listfilms.filter( year: (1945..2010), genre: /Sci-Fi|Comedy/, director: /Zemeckis Robert|Cameron James/ ).first(5).each{ |f| f.to_s }
  
