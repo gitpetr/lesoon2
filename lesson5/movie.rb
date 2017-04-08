@@ -1,5 +1,5 @@
 class Movie
-  attr_reader *TITRES, :manthf
+  attr_reader *TITRES
  
   def initialize(owner, film)
     @link = film[:link]
@@ -25,12 +25,12 @@ class Movie
   end
   
   def month
-    # Date.parse(self.date).strftime("%B") if self.date.length == 10
     self.date[5..6] if self.date.length == 10
   end
+
   def match_filter?(**option)
       s = ""
-      option.each{|k, v| s += ( " && " + ( v ===  ((self.send(k).class==Array) ? self.send(k).join(',')  : self.send(k)) ).to_s)}
-      return s
+      option.each{|k, v| s +=  " && " +  ((v.class==Range)? v === self.send(k).to_i : ((self.send(k).class==Array) ? v === self.send(k).join(',') : v === self.send(k))).to_s}
+      s
   end
 end

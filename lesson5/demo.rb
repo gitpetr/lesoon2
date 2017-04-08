@@ -21,6 +21,7 @@ puts
 puts
 puts "\t - Cтатистика режиссёров:"
 listfilms.stats(:director).sort.first(5).each{|k, v| listfilms.print_stats(k, v) }
+puts
 puts "\t - Cтатистика актеров:"
 listfilms.stats(:actors).sort.first(5).each{|k, v| listfilms.print_stats(k, v) }
 puts
@@ -29,29 +30,26 @@ listfilms.stats(:year).first(5).each{|k, v|  listfilms.print_stats(k, v)  }
 puts
 puts "\t - Статистика по месяцам"
 listfilms.stats(:month).each{|k, v| listfilms.print_stats(MANTH[k.to_i-1].to_s, v) }
+puts
 begin
 puts("\t - Жанр фильма?")  
 puts "\t listfilms.all.first.has_genre? 'Comedy' "
-puts (listfilms.all.first.has_genre? 'Comedy')?  ("Yes") :  ("No")
+puts (listfilms.all.first.has_genre? 'Comedy')?  ("\t Yes") :  ("\t No")
 puts "\t listfilms.all[154].has_genre? 'Comedy'"
-puts (listfilms.all[154].has_genre? 'Comedy')?  "Yes" : "No"
+puts (listfilms.all[154].has_genre? 'Comedy')?  "\t Yes" : "\t No"
 puts "\t listfilms.all.first.has_genre? 'Drama'"
-puts (listfilms.all.first.has_genre? 'Drama')?  "Yes" : "No"
+puts (listfilms.all.first.has_genre? 'Drama')?  "\t Yes" : "\t No"
 puts "\t listfilms.all[3].has_genre? 'Drama'"
-puts (listfilms.all[3].has_genre? 'Drama')?  "Yes" : "No"
+puts (listfilms.all[3].has_genre? 'Drama')?  "\t Yes" : "\t No"
 puts "\t Если ошиблись с жанром listfilms.all[3].has_genre? 'Boevik'"
-puts (listfilms.all[3].has_genre? 'Boevik')?  "Yes" : "No"
+puts (listfilms.all[3].has_genre? 'Boevik')?  "\t Yes" : "\t No"
 rescue Exception => e 
-  puts "\t#{e.message}"
+  puts "\t\t #{e.message}"
 end
-puts "\t Список жанров"
+puts
+puts "\t - Список жанров"
 puts listfilms.genries
 puts
-puts " - Фильтр listfilms.filtr(year: 1942..1949, genre: 'Film-Noir').first(5).each{|f| f.to_s }"
-listfilms.filtr(year: 1942..1949, genre: 'Film-Noir').first(5).each{|f| f.to_s }
-puts  
-puts " - Фильтр listfilms.filtr(year: 1942..2016, actors: 'Uma Thurman').first(5).each{|f| f.to_s }"
-listfilms.filtr(year: 1942..2016, actors: 'Uma Thurman').first(5).each{|f| f.to_s }
-puts 'фильтер'
-listfilms.filter( year: /2010/, genre: /Sci-Fi|Comedy/,  name: /Inception/ ).first(5).each{|f| f.to_s }
+puts "\t - Фильтр: listfilms.filter( year: (1945..2010), genre: /Sci-Fi|Comedy/, director: /Zemeckis Robert|Cameron James/ )"
+listfilms.filter( year: (1945..2010), genre: /Sci-Fi|Comedy/, director: /Zemeckis Robert|Cameron James/ ).first(5).each{|f| f.to_s }
  
