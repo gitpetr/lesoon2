@@ -29,6 +29,6 @@ class Movie
   end
 
   def match_filter?(**option)
-    option.all?{ |k, v|  (self.send(k).class==Array) ? v === self.send(k).join(',') : v === self.send(k) }
+    option.all?{ |k, v|  (self.send(k).is_a?(Array)) ? v === self.send(k).join(',') : v === self.send(k) }
   end
 end
