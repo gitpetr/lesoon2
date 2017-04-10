@@ -34,8 +34,8 @@ class MovieCollection
     @genries = all.flat_map(&:genre).uniq.sort
   end
 
-  def filter(option) 
-    @allfilms.select{ |f| f.match_filter?(option) } 
+  def filter(filters) 
+    @allfilms.select{ |f| f.match_filter?(filters) } 
   end
   
 end

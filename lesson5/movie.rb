@@ -28,7 +28,9 @@ class Movie
     self.date[5..6] if self.date.length == 10
   end
 
-  def match_filter?(**option)
-    option.all?{ |k, v|  (self.send(k).is_a?(Array)) ? v === self.send(k).join(',') : v === self.send(k) }
+  def match_filter?(**filters)
+    filters.all?{ |k, v|  
+      field = self.send(k)
+      field.is_a?(Array) ?  field.any?{ |acter| v === acter } : v ===  field }
   end
 end
